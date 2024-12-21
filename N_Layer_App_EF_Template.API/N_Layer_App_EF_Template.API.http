@@ -1,0 +1,6 @@
+@N_Layer_App_EF_Template.API_HostAddress = http://localhost:5090
+
+GET {{N_Layer_App_EF_Template.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
