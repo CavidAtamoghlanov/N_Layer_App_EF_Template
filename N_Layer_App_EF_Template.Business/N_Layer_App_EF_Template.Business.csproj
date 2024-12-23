@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Services\ExternalServices\Concretes\" />
-    <Folder Include="Services\InternalServices\Concretes\" />
   </ItemGroup>
 
   <ItemGroup>
