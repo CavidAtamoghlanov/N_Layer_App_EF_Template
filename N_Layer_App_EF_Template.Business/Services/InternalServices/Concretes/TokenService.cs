@@ -4,7 +4,7 @@ using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class TokenService : ResponseMethods, ITokenService
+public class TokenService :  ITokenService
 {
     public Task<string> GenerateJwtTokenAsync(long userId, string username, string role)
     {

@@ -4,7 +4,7 @@ using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class UserService : ResponseMethods, IUserService
+public class UserService :  IUserService
 {
     public Task<bool> AddRolesToUserAsync(long userId, IEnumerable<string> roleNames)
     {

@@ -1,17 +1,16 @@
-﻿using N_Layer_App_EF_Template.Business.Responses;
-using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
+﻿using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class RoleService : ResponseMethods, IRoleService
+public class RoleService :  IRoleService
 {
-    public Task AddClaimsToRoleAsync(long roleId, IEnumerable<System.Security.Claims.Claim> claims)
+    public Task AddClaimsToRoleAsync(long roleId, IEnumerable<Claim> claims)
     {
         throw new NotImplementedException();
     }
 
-    public Task AddClaimToRoleAsync(long roleId, System.Security.Claims.Claim claim)
+    public Task AddClaimToRoleAsync(long roleId, Claim claim)
     {
         throw new NotImplementedException();
     }
@@ -41,17 +40,17 @@ public class RoleService : ResponseMethods, IRoleService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<System.Security.Claims.Claim>> GetClaimsByRoleIdAsync(long roleId)
+    public Task<IEnumerable<Claim>> GetClaimsByRoleIdAsync(long roleId)
     {
         throw new NotImplementedException();
     }
 
-    public Task RemoveClaimFromRoleAsync(long roleId, System.Security.Claims.Claim claim)
+    public Task RemoveClaimFromRoleAsync(long roleId, Claim claim)
     {
         throw new NotImplementedException();
     }
 
-    public Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<System.Security.Claims.Claim> claims)
+    public Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<Claim> claims)
     {
         throw new NotImplementedException();
     }

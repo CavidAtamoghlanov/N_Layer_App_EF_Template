@@ -4,14 +4,14 @@ using N_Layer_App_EF_Template.Domain.Enums;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class AuthService : ResponseMethods, IAuthService
+public class AuthService : IAuthService
 {
-    public Task<bool> ConfirmAsync(string contact, ConfirmationMethod method)
+    public Task<bool> ConfirmAsync(string token, string otp, ConfirmationMethod method)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> ForgotePasswordAsync(string email)
+    public Task<bool> ForgotPasswordAsync(string email)
     {
         throw new NotImplementedException();
     }
@@ -26,7 +26,7 @@ public class AuthService : ResponseMethods, IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<string> RegisterAsync(string email, string password, string firstName, string lastName)
+    public Task<string> RegisterAsync(string firstName, string lastName, string? middleName, string email, string password, string? phoneNumber)
     {
         throw new NotImplementedException();
     }
