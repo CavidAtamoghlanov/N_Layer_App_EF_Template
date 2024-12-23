@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\ExternalServices\Concretes\" />
+    <Folder Include="Services\InternalServices\Concretes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\N_Layer_App_EF_Template.Domain\N_Layer_App_EF_Template.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

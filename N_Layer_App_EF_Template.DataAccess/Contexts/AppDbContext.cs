@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using N_Layer_App_EF_Template.Configurations.EntityConfigurations;
 using N_Layer_App_EF_Template.Domain.Entities.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 using System.Linq.Expressions;
@@ -20,7 +19,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(RoleClaimConfiguration).Assembly);
         base.OnModelCreating(modelBuilder);
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -91,7 +89,7 @@ public class AppDbContext : DbContext
         if (ShouldFilterEntity<TEntity>(entityType))
         {
             var filterExpression = CreateFilterExpression<TEntity>();
-            if (filterExpression != null)
+            if (filterExpression is not null)
             {
                 modelBuilder.Entity<TEntity>().HasQueryFilter(filterExpression);
             }
@@ -108,9 +106,9 @@ public class AppDbContext : DbContext
         return false;
     }
 
-    protected virtual Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>() where TEntity : class
+    protected virtual Expression<Func<TEntity, bool>>? CreateFilterExpression<TEntity>() where TEntity : class
     {
-        Expression<Func<TEntity, bool>> expression = null;
+        Expression<Func<TEntity, bool>>? expression = null;
 
         if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
         {
@@ -126,7 +124,7 @@ public class AppDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Role> Roles { get; set; }
-    public virtual DbSet<RoleClaim> RoleClaims { get; set; }
+    public virtual DbSet<Claim> Claims { get; set; }
     public virtual DbSet<UserToken> UserTokens { get; set; }
     public virtual DbSet<UserLogin> UserLogins { get; set; }
 

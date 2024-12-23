@@ -11,5 +11,5 @@ public class Role : BaseEntity<long>
 
     // Navigation Properties
     public virtual ICollection<User> Users { get; set; }
-    public virtual ICollection<RoleClaim> RoleClaims { get; set; }
+    public virtual ICollection<Claim> Claims { get; set; }
 }

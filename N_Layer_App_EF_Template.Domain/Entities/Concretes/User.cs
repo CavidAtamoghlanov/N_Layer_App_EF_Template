@@ -1,5 +1,6 @@
 ﻿using N_Layer_App_EF_Template.Domain.Entities.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Commons;
+using N_Layer_App_EF_Template.Domain.Enums;
 
 namespace N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
@@ -17,6 +18,13 @@ public class User : BaseEntity<long>, ISoftDelete
     public bool IsDeleted { get; set; }
     public DateTime? DeletedDate { get; set; }
     public bool IsPermanently { get; set; }
+
+    public string? PhoneNumber { get; set; }              
+    public bool PhoneNumberConfirmed { get; set; }       
+    public string? Otp { get; set; }                      
+    public DateTime? OtpExpiration { get; set; }         
+    public DateTime? OtpSendDate { get; set; }           
+    public ConfirmationMethod? OtpVerificationMethod { get; set; }  
 
     // Foregin Keys
 

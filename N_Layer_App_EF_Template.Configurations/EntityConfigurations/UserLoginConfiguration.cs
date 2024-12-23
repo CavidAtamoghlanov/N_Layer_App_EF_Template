@@ -12,6 +12,5 @@ public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
         builder.Property(ul => ul.ProviderName).IsRequired().HasMaxLength(100);
         builder.Property(ul => ul.ProviderKey).IsRequired().HasMaxLength(200);
 
-        builder.HasQueryFilter(ul => !ul.IsDeleted);
     }
 }

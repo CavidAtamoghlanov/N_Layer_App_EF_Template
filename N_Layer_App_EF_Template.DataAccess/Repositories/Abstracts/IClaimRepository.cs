@@ -2,6 +2,6 @@
 
 namespace N_Layer_App_EF_Template.DataAccess.Repositories.Abstracts;
 
-public interface IRoleClaimRepository : IRepository<RoleClaim, long>
+public interface IClaimRepository : IRepository<Claim, long>
 {
 }
