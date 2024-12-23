@@ -1,10 +1,16 @@
-﻿using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
+﻿using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
+using N_Layer_App_EF_Template.Business.Services.Commons;
+using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
+using N_Layer_App_EF_Template.DataAccess.UnitOfWorks.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class RoleService :  IRoleService
+public class RoleService : BaseService, IRoleService
 {
+    public RoleService(IUnitOfWork unitOfWork, IAutoMapperConfiguration autoMapper) : base(unitOfWork, autoMapper)
+    { }
+
     public Task AddClaimsToRoleAsync(long roleId, IEnumerable<Claim> claims)
     {
         throw new NotImplementedException();
@@ -45,12 +51,12 @@ public class RoleService :  IRoleService
         throw new NotImplementedException();
     }
 
-    public Task RemoveClaimFromRoleAsync(long roleId, Claim claim)
+    public Task RemoveClaimFromRoleAsync(long roleId, string claimId)
     {
         throw new NotImplementedException();
     }
 
-    public Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<Claim> claims)
+    public Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<string> claimIds)
     {
         throw new NotImplementedException();
     }

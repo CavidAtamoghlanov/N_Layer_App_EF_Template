@@ -13,6 +13,6 @@ public interface IRoleService
     Task<IEnumerable<Claim>> GetClaimsByRoleIdAsync(long roleId);
     Task AddClaimToRoleAsync(long roleId, Claim claim);
     Task AddClaimsToRoleAsync(long roleId, IEnumerable<Claim> claims);
-    Task RemoveClaimFromRoleAsync(long roleId, Claim claim);
-    Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<Claim> claims);
+    Task RemoveClaimFromRoleAsync(long roleId, string claimId);
+    Task RemoveClaimsFromRoleAsync(long roleId, IEnumerable<string> claimIds);
 }

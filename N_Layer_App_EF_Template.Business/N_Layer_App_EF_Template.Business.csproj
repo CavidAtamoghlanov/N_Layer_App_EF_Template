@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\N_Layer_App_EF_Template.DataAccess\N_Layer_App_EF_Template.DataAccess.csproj" />
     <ProjectReference Include="..\N_Layer_App_EF_Template.Domain\N_Layer_App_EF_Template.Domain.csproj" />
   </ItemGroup>
 
