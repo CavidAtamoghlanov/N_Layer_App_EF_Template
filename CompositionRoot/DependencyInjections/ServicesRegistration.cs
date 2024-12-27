@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
-using N_Layer_App_EF_Template.Business.Mappings.Concretes;
+using N_Layer_App_EF_Template.Business.Services.ExternalServices.OtpServices.Abstracts;
+using N_Layer_App_EF_Template.Business.Services.ExternalServices.OtpServices.Concretes;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
@@ -20,9 +21,19 @@ public static class ServicesRegistration
 
         #endregion
 
+        #region Otp Services
+        services.AddScoped<IOtpService, FacebookOtpService>();
+        services.AddScoped<IOtpService, InstagramOtpService>();
+        services.AddScoped<IOtpService, TelegramOtpService>();
+        services.AddScoped<IOtpService, WhatsAppOtpService>();
+        services.AddScoped<IOtpService, SmsOtpService>();
+        services.AddScoped<IOtpService, LinkedInOtpService>();
+        services.AddScoped<IOtpService, EmailOtpService>();
+        #endregion
+
         #region AutoMapper
 
-        services.AddScoped<IAutoMapperConfiguration, AutoMapperConfiguration>();
+        services.AddScoped<IAutoMapper, Business.Mappings.Concretes.AutoMapper>();
 
         #endregion
         return services;

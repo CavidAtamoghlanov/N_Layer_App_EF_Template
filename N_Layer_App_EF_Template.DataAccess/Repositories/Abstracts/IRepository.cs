@@ -10,7 +10,9 @@ public interface IRepository<TEntity, TKey> where TEntity : IBaseEntity<TKey>, n
     Task<IList<TEntity>> GetAllAsync(bool isTracking = true);
     IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, bool isTracking = true);
     Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true);
-    Task<TEntity?> Get(TKey id, bool isTracking = true);
+    Task<TEntity?> GetAsync(TKey id, bool isTracking = true, params string[] includeProperties);
+    Task<IList<TEntity>> GetAllIncludingAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties);
+    Task<IQueryable<TEntity>> GetAllIncludingQueryAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties);
 
     // Commands
     Task AddAsync(TEntity entity);

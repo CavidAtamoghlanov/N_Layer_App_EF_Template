@@ -1,72 +1,80 @@
-﻿using N_Layer_App_EF_Template.Business.Responses;
+﻿using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
+using N_Layer_App_EF_Template.Business.ServiceResults.Abstracts;
+using N_Layer_App_EF_Template.Business.ServiceResults.Concretes;
+using N_Layer_App_EF_Template.Business.Services.Commons;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
+using N_Layer_App_EF_Template.DataAccess.UnitOfWorks.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class UserService :  IUserService
+public class UserService : BaseService, IUserService
 {
-    public Task<bool> AddRolesToUserAsync(long userId, IEnumerable<string> roleNames)
+    public UserService(IUnitOfWork unitOfWork, IAutoMapper autoMapper) : base(unitOfWork, autoMapper)
+    {
+    }
+
+    public Task<IServiceResult> AddRolesToUserAsync(long userId, IEnumerable<string> roleNames)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> AddRoleToUserAsync(long userId, string roleName)
+    public Task<IServiceResult> AddRoleToUserAsync(long userId, string roleName)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> CreateAsync(User user)
+    public Task<IServiceResult> CreateAsync(User user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(long id)
+    public Task<IServiceResult> DeleteAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<User>> GetAllAsync()
+    public Task<IServiceResult> GetAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetAsync(long id)
+    public Task<IServiceResult> GetAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetByEmailAsync(string email)
+    public Task<IServiceResult> GetByEmailAsync(string email)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Role>> GetRolesAsync(long userId)
+    public Task<IServiceResult> GetRolesAsync(long userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<User>> GetUsersByRoleAsync(string roleName)
+    public Task<IServiceResult> GetUsersByRoleAsync(string roleName)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> RemoveRoleFromUserAsync(long userId, string roleName)
+    public Task<IServiceResult> RemoveRoleFromUserAsync(long userId, string roleName)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> RemoveRolesFromUserAsync(long userId, IEnumerable<string> roleNames)
+    public Task<IServiceResult> RemoveRolesFromUserAsync(long userId, IEnumerable<string> roleNames)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> UpdateAsync(User user)
+    public Task<IServiceResult> UpdateAsync(User user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> UserHasRoleAsync(long userId, string roleName)
+    public Task<IServiceResult> UserHasRoleAsync(long userId, string roleName)
     {
         throw new NotImplementedException();
     }

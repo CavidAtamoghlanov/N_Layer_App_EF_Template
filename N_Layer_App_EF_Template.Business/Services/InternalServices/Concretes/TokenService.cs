@@ -1,42 +1,50 @@
-﻿using N_Layer_App_EF_Template.Business.Responses;
+﻿using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
+using N_Layer_App_EF_Template.Business.ServiceResults.Abstracts;
+using N_Layer_App_EF_Template.Business.ServiceResults.Concretes;
+using N_Layer_App_EF_Template.Business.Services.Commons;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
+using N_Layer_App_EF_Template.DataAccess.UnitOfWorks.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
-public class TokenService :  ITokenService
+public class TokenService : BaseService, ITokenService
 {
-    public Task<string> GenerateJwtTokenAsync(long userId, string username, string role)
+    public TokenService(IUnitOfWork unitOfWork, IAutoMapper autoMapper) : base(unitOfWork, autoMapper)
+    {
+    }
+
+    public Task<IServiceResult> GenerateJwtTokenAsync(long userId, string username, string role)
     {
         throw new NotImplementedException();
     }
 
-    public Task<string> GenerateRefreshTokenAsync()
+    public Task<IServiceResult> GenerateRefreshTokenAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Claim>> GetClaimsFromTokenAsync(string token)
+    public Task<IServiceResult> GetClaimsFromTokenAsync(string token)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<string>> GetRolesFromTokenAsync(string token)
+    public Task<IServiceResult> GetRolesFromTokenAsync(string token)
     {
         throw new NotImplementedException();
     }
 
-    public Task<string> RefreshTokenAsync(string refreshToken)
+    public Task<IServiceResult> RefreshTokenAsync(string refreshToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task RevokeRefreshTokenAsync(string refreshToken)
+    public Task<IServiceResult> RevokeRefreshTokenAsync(string refreshToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> ValidateTokenAsync(string token)
+    public Task<IServiceResult> ValidateTokenAsync(string token)
     {
         throw new NotImplementedException();
     }

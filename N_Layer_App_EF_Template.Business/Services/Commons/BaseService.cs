@@ -1,16 +1,15 @@
 ﻿
 using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
-using N_Layer_App_EF_Template.Business.Responses;
 using N_Layer_App_EF_Template.DataAccess.UnitOfWorks.Abstracts;
 
 namespace N_Layer_App_EF_Template.Business.Services.Commons;
 
-public abstract class BaseService : ResponseMethods
+public abstract class BaseService : ServiceResultMethod
 {
     protected readonly IUnitOfWork _unitOfWork;
-    protected readonly IAutoMapperConfiguration _autoMapper;
+    protected readonly IAutoMapper _autoMapper;
 
-    public BaseService(IUnitOfWork unitOfWork, IAutoMapperConfiguration autoMapper)
+    public BaseService(IUnitOfWork unitOfWork, IAutoMapper autoMapper)
     {
         _unitOfWork = unitOfWork;
         _autoMapper = autoMapper;

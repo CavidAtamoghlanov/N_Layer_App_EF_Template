@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CompositionRoot\N_Layer_App_EF_Template.CompositionRoot.csproj" />
   </ItemGroup>
 

@@ -34,18 +34,12 @@ public class Repository<TEntity, TKey>(AppDbContext context) : IRepository<TEnti
 
     public async Task DeleteAsync(TKey id)
     {
-        var entity = await Get(id);
+        var entity = await GetAsync(id);
         if (entity is not null)
         {
             _dbSet.Remove(entity);
             await SaveChangesAsync();
         }
-    }
-
-    public async Task<TEntity?> Get(TKey id, bool isTracking = true)
-    {
-        var query = isTracking ? _dbSet : _dbSet.AsNoTracking();
-        return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id));
     }
 
     public IQueryable<TEntity> GetAll(bool isTracking = true)
@@ -66,6 +60,36 @@ public class Repository<TEntity, TKey>(AppDbContext context) : IRepository<TEnti
     public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true)
     {
         return await (isTracking ? _dbSet.Where(predicate) : _dbSet.Where(predicate).AsNoTracking()).ToListAsync();
+    }
+
+    public async Task<TEntity?> GetAsync(TKey id, bool isTracking = true, params string[] includeProperties)
+    {
+        var query = isTracking ? _dbSet : _dbSet.AsNoTracking();
+
+        foreach (var includeProperty in includeProperties)
+            query = query.Include(includeProperty);
+
+        return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id));
+    }
+
+    public async Task<IList<TEntity>> GetAllIncludingAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties)
+    {
+        var query = isTracking ? _dbSet : _dbSet.AsNoTracking();
+
+        foreach (var includeProperty in includeProperties)
+            query = query.Include(includeProperty);
+
+        return await query.Where(predicate).ToListAsync();
+    }
+
+    public async Task<IQueryable<TEntity>> GetAllIncludingQueryAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties)
+    {
+        var query = isTracking ? _dbSet : _dbSet.AsNoTracking();
+
+        foreach (var includeProperty in includeProperties)
+            query = query.Include(includeProperty);
+
+        return await Task.FromResult(query.Where(predicate));
     }
 
     public async Task UpdateAsync(TEntity entity)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using N_Layer_App_EF_Template.Configurations.SeedDatas;
 using N_Layer_App_EF_Template.Domain.Entities.Abstracts;
 using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 using System.Linq.Expressions;
@@ -19,6 +20,7 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        SeedDataManager.ApplySeedData(modelBuilder);
         base.OnModelCreating(modelBuilder);
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
