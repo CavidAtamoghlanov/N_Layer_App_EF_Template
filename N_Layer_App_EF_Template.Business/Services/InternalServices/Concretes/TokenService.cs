@@ -7,11 +7,13 @@ using N_Layer_App_EF_Template.Business.ServiceResults.Concretes;
 using N_Layer_App_EF_Template.Business.Services.Commons;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
 using N_Layer_App_EF_Template.DataAccess.UnitOfWorks.Abstracts;
+using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 using N_Layer_App_EF_Template.Domain.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Claim = System.Security.Claims.Claim;
 
 namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Concretes;
 
@@ -110,18 +112,27 @@ public class TokenService : BaseService, ITokenService
         }
     }
 
-    public Task<IServiceResult> RefreshTokenAsync(string refreshToken)
+    public async Task<IServiceResult> ValidRefreshTokenAsync(string refreshToken)
     {
-        throw new NotImplementedException();
+        var currentRefreshToken = await _unitOfWork.GetRepository<UserToken, string>()
+                              .FindAsync(ut => ut.Value == refreshToken);
+        if (currentRefreshToken is not null)
+            return Success<bool>(true);
+        else
+            return BadRequest<bool>("refresh token is not valid", false);
     }
 
-    public Task<IServiceResult> RevokeRefreshTokenAsync(string refreshToken)
+    public async Task<IServiceResult> RevokeRefreshTokenAsync(string refreshToken)
     {
-        throw new NotImplementedException();
+        var currentRefreshToken = (await _unitOfWork.GetRepository<UserToken, string>()
+                            .FindAsync(ut => ut.Value == refreshToken)).FirstOrDefault();
+
+        if (currentRefreshToken is null)
+            return BadRequest("refresh token not found");
+
+        await _unitOfWork.GetRepository<UserToken, string>().DeleteAsync(currentRefreshToken);
+        return Success();
     }
 
-    public Task<IServiceResult> ValidateTokenAsync(string token)
-    {
-        throw new NotImplementedException();
-    }
+
 }
