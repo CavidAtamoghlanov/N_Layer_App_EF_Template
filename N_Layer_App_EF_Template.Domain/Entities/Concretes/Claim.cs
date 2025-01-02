@@ -2,7 +2,7 @@
 
 namespace N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
-public class RoleClaim : BaseEntity<long>
+public class Claim : BaseEntity<long>
 {
     public string Name { get; set; }
     public string Description { get; set; }

@@ -9,8 +9,8 @@ public class UserToken:BaseEntity<string>
     public DateTime ExpireDate { get; set; }
 
     // Foregin Keys
-    public long UserId { get; set; }
+    public long? UserId { get; set; }
 
     // Navigation Properties
-    public virtual User User { get; set; }
+    public virtual User? User { get; set; }
 }

@@ -5,9 +5,9 @@ using N_Layer_App_EF_Template.Domain.Entities.Concretes;
 
 namespace N_Layer_App_EF_Template.DataAccess.Repositories.Concretes;
 
-public class RoleClaimRepository : Repository<RoleClaim, long>, IRoleClaimRepository
+public class ClaimRepository : Repository<Claim, long>, IClaimRepository
 {
-    public RoleClaimRepository(AppDbContext context) : base(context)
+    public ClaimRepository(AppDbContext context) : base(context)
     {
     }
 }

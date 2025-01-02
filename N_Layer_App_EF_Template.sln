@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.API", "N_Layer_App_EF_Template.API\N_Layer_App_EF_Template.API.csproj", "{8634B33F-8CCE-43EB-891C-09E957BD99E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.API", "N_Layer_App_EF_Template.API\N_Layer_App_EF_Template.API.csproj", "{8634B33F-8CCE-43EB-891C-09E957BD99E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.Domain", "N_Layer_App_EF_Template.Domain\N_Layer_App_EF_Template.Domain.csproj", "{00D6FE91-5369-4DC9-9C0D-37C841F2C37C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.Domain", "N_Layer_App_EF_Template.Domain\N_Layer_App_EF_Template.Domain.csproj", "{00D6FE91-5369-4DC9-9C0D-37C841F2C37C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.DataAccess", "N_Layer_App_EF_Template.DataAccess\N_Layer_App_EF_Template.DataAccess.csproj", "{DBD887D5-75AF-4DB0-9136-DB45847A6937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.DataAccess", "N_Layer_App_EF_Template.DataAccess\N_Layer_App_EF_Template.DataAccess.csproj", "{DBD887D5-75AF-4DB0-9136-DB45847A6937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.Business", "N_Layer_App_EF_Template.Business\N_Layer_App_EF_Template.Business.csproj", "{AEEB1015-D751-4E53-AD8E-FD0EBF6FB1BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.Business", "N_Layer_App_EF_Template.Business\N_Layer_App_EF_Template.Business.csproj", "{AEEB1015-D751-4E53-AD8E-FD0EBF6FB1BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.Tests", "N_Layer_App_EF_Template.Tests\N_Layer_App_EF_Template.Tests.csproj", "{11A048C4-CDB8-4B4C-9ED5-D58BD31169B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.Tests", "N_Layer_App_EF_Template.Tests\N_Layer_App_EF_Template.Tests.csproj", "{11A048C4-CDB8-4B4C-9ED5-D58BD31169B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.Configurations", "N_Layer_App_EF_Template.Configurations\N_Layer_App_EF_Template.Configurations.csproj", "{4568B21E-3FC7-4A79-88AA-3721A1190EFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N_Layer_App_EF_Template.Configurations", "N_Layer_App_EF_Template.Configurations\N_Layer_App_EF_Template.Configurations.csproj", "{4568B21E-3FC7-4A79-88AA-3721A1190EFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N_Layer_App_EF_Template.CompositionRoot", "CompositionRoot\N_Layer_App_EF_Template.CompositionRoot.csproj", "{F686B02A-DFF6-4397-AD93-C65C1FF8AEC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4568B21E-3FC7-4A79-88AA-3721A1190EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4568B21E-3FC7-4A79-88AA-3721A1190EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4568B21E-3FC7-4A79-88AA-3721A1190EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F686B02A-DFF6-4397-AD93-C65C1FF8AEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F686B02A-DFF6-4397-AD93-C65C1FF8AEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F686B02A-DFF6-4397-AD93-C65C1FF8AEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F686B02A-DFF6-4397-AD93-C65C1FF8AEC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

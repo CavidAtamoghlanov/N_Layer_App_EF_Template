@@ -11,5 +11,7 @@ public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
         builder.HasKey(ut => ut.Id);
         builder.Property(ut => ut.Key).IsRequired().HasMaxLength(100);
         builder.Property(ut => ut.Value).IsRequired().HasMaxLength(200);
+        builder.Property(ut => ut.UserId).IsRequired(false);
+        builder.Property(ut => ut.User).IsRequired(false);
     }
 }

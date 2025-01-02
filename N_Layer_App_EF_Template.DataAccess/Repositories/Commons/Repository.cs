@@ -11,6 +11,37 @@ public class Repository<TEntity, TKey>(AppDbContext context) : IRepository<TEnti
     protected readonly AppDbContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
+    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includes)
+    {
+        var query = ApplyIncludes(_dbSet, includes, isTracking);
+        return await query.Where(predicate).ToListAsync();
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync(bool isTracking = true, params string[] includes)
+    {
+        var query = ApplyIncludes(_dbSet, includes, isTracking);
+        return await query.ToListAsync();
+    }
+
+    public async Task<TEntity?> GetAsync(TKey id, bool isTracking = true, params string[] includes)
+    {
+        var query = ApplyIncludes(_dbSet, includes, isTracking);
+        return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id));
+    }
+
+    private IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query, string[] includes, bool isTracking)
+    {
+        if (!isTracking)
+            query = query.AsNoTracking();
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return query;
+    }
+
     public async Task AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
@@ -34,38 +65,12 @@ public class Repository<TEntity, TKey>(AppDbContext context) : IRepository<TEnti
 
     public async Task DeleteAsync(TKey id)
     {
-        var entity = await Get(id);
+        var entity = await GetAsync(id);
         if (entity is not null)
         {
             _dbSet.Remove(entity);
             await SaveChangesAsync();
         }
-    }
-
-    public async Task<TEntity?> Get(TKey id, bool isTracking = true)
-    {
-        var query = isTracking ? _dbSet : _dbSet.AsNoTracking();
-        return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id));
-    }
-
-    public IQueryable<TEntity> GetAll(bool isTracking = true)
-    {
-        return isTracking ? _dbSet : _dbSet.AsNoTracking();
-    }
-
-    public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, bool isTracking)
-    {
-        return isTracking ? _dbSet.Where(predicate) : _dbSet.Where(predicate).AsNoTracking();
-    }
-
-    public async Task<IList<TEntity>> GetAllAsync(bool isTracking = true)
-    {
-        return await (isTracking ? _dbSet : _dbSet.AsNoTracking()).ToListAsync();
-    }
-
-    public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true)
-    {
-        return await (isTracking ? _dbSet.Where(predicate) : _dbSet.Where(predicate).AsNoTracking()).ToListAsync();
     }
 
     public async Task UpdateAsync(TEntity entity)

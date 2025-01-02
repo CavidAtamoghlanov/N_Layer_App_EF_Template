@@ -1,9 +1,11 @@
+using N_Layer_App_EF_Template.CompositionRoot.DependencyInjections.Commons;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddApplicationDependencies(builder.Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
