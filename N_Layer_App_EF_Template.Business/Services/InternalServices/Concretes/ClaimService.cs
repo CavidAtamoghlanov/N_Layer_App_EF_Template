@@ -14,7 +14,7 @@ public class ClaimService : BaseService, IClaimService
     {
     }
 
-    public async Task<IServiceResult> UpdateAsync(ClaimDto claimDto)
+    public async Task<IServiceResult> UpdateAsync(UpdateClaimDto claimDto)
     {
         var repo = _unitOfWork.GetRepository<Claim, long>();
         var existingClaim = await repo.GetAsync(claimDto.Id);

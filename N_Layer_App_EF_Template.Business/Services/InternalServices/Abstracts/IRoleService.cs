@@ -11,12 +11,12 @@ public interface IRoleService
     Task<IServiceResult> GetAsync(long roleId);
     Task<IServiceResult> GetAllAsync();
     Task<IServiceResult> GetAllByUserId(long userId);
-    Task<IServiceResult> CreateAsync(RoleDto role);
-    Task<IServiceResult> UpdateAsync(RoleDto role);
+    Task<IServiceResult> CreateAsync(CreateRoleDto createRoleDto);
+    Task<IServiceResult> UpdateAsync(UpdateRoleDto updateRoleDto);
     Task<IServiceResult> DeleteAsync(long roleId);
     Task<IServiceResult> GetClaimsByRoleIdAsync(long roleId);
-    Task<IServiceResult> AddClaimToRoleAsync(long roleId, ClaimDto claimDto);
-    Task<IServiceResult> AddClaimsToRoleAsync(long roleId, IEnumerable<ClaimDto> claimDtos);
+    Task<IServiceResult> AddClaimToRoleAsync(long roleId, long claimId);
+    Task<IServiceResult> AddClaimsToRoleAsync(long roleId, IEnumerable<long> claimIds);
     Task<IServiceResult> RemoveClaimFromRoleAsync(long roleId, long claimId);
     Task<IServiceResult> RemoveClaimsFromRoleAsync(long roleId, IEnumerable<long> claimIds);
 }

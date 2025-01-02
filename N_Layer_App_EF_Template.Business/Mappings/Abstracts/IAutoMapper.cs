@@ -2,6 +2,6 @@
 
 public interface IAutoMapper
 {
-    public IEnumerable<T> Map<T, TModel>(IEnumerable<TModel> model) where T : class, new();
-    public T Map<T, TModel>(TModel model) where T : class, new();
+    public IEnumerable<T> Map<T, TModel>(IEnumerable<TModel> model, bool hasProfiler = false) where T : class, new();
+    public T Map<T, TModel>(TModel model, bool hasProfiler = false) where T : class, new();
 }

@@ -18,21 +18,21 @@ public class RoleServiceTestController : ControllerBase
     }
 
     [HttpPost("AddClaimsToRole")]
-    public async Task<IActionResult> TestAddClaimsToRole([FromBody] RoleClaimDto roleClaimDto)
+    public async Task<IActionResult> TestAddClaimsToRole([FromBody] RoleClaimDto1 roleClaimDto)
     {
-        var result = await _roleService.AddClaimsToRoleAsync(roleClaimDto.RoleId, roleClaimDto.Claims);
+        var result = await _roleService.AddClaimsToRoleAsync(roleClaimDto.RoleId, roleClaimDto.ClaimIds);
         return StatusCode((int)result.StatusCode, result);
     }
 
     [HttpPost("AddClaimToRole")]
-    public async Task<IActionResult> TestAddClaimToRole([FromBody] RoleClaimDto roleClaimDto)
+    public async Task<IActionResult> TestAddClaimToRole([FromBody] RoleClaimDto2 roleClaimDto)
     {
-        var result = await _roleService.AddClaimToRoleAsync(roleClaimDto.RoleId, roleClaimDto.Claim);
+        var result = await _roleService.AddClaimToRoleAsync(roleClaimDto.RoleId, roleClaimDto.ClaimId);
         return StatusCode((int)result.StatusCode, result);
     }
 
     [HttpPost("CreateRole")]
-    public async Task<IActionResult> TestCreateRole([FromBody] RoleDto roleDto)
+    public async Task<IActionResult> TestCreateRole([FromBody] CreateRoleDto roleDto)
     {
         var result = await _roleService.CreateAsync(roleDto);
         return StatusCode((int)result.StatusCode, result);
@@ -81,7 +81,7 @@ public class RoleServiceTestController : ControllerBase
     }
 
     [HttpPut("UpdateRole")]
-    public async Task<IActionResult> TestUpdateRole([FromBody] RoleDto roleDto)
+    public async Task<IActionResult> TestUpdateRole([FromBody] UpdateRoleDto roleDto)
     {
         var result = await _roleService.UpdateAsync(roleDto);
         return StatusCode((int)result.StatusCode, result);
@@ -91,6 +91,17 @@ public class RoleServiceTestController : ControllerBase
 public class RoleClaimDto
 {
     public long RoleId { get; set; }
-    public IEnumerable<ClaimDto> Claims { get; set; }
-    public ClaimDto Claim { get; set; }
+    public IEnumerable<UpdateClaimDto> Claims { get; set; }
+    public UpdateClaimDto Claim { get; set; }
+}
+public class RoleClaimDto2
+{
+    public long RoleId { get; set; }
+    public long ClaimId { get; set; }
+}
+
+public class RoleClaimDto1
+{
+    public long RoleId { get; set; }
+    public IEnumerable<long> ClaimIds { get; set; }
 }

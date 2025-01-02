@@ -7,5 +7,5 @@ namespace N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
 
 public interface IClaimService
 {
-    Task<IServiceResult> UpdateAsync(ClaimDto claimDto);
+    Task<IServiceResult> UpdateAsync(UpdateClaimDto claimDto);
 }

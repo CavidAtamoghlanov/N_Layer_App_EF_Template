@@ -6,13 +6,9 @@ namespace N_Layer_App_EF_Template.DataAccess.Repositories.Abstracts;
 public interface IRepository<TEntity, TKey> where TEntity : IBaseEntity<TKey>, new()
 {
     // Queries
-    IQueryable<TEntity> GetAll(bool isTracking = true);
-    Task<IList<TEntity>> GetAllAsync(bool isTracking = true);
-    IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, bool isTracking = true);
-    Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true);
-    Task<TEntity?> GetAsync(TKey id, bool isTracking = true, params string[] includeProperties);
-    Task<IList<TEntity>> GetAllIncludingAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties);
-    Task<IQueryable<TEntity>> GetAllIncludingQueryAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includeProperties);
+    Task<TEntity?> GetAsync(TKey id, bool isTracking = true, params string[] includes);
+    Task<IEnumerable<TEntity>> GetAllAsync(bool isTracking = true, params string[] includes);
+    Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool isTracking = true, params string[] includes);
 
     // Commands
     Task AddAsync(TEntity entity);

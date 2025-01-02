@@ -17,7 +17,7 @@ public class ClaimServiceTestController : ControllerBase
 
     // Test endpoint for updating a claim
     [HttpPut("UpdateClaim")]
-    public async Task<IActionResult> TestUpdateClaim([FromBody] ClaimDto claimDto)
+    public async Task<IActionResult> TestUpdateClaim([FromBody] UpdateClaimDto claimDto)
     {
         var result = await _claimService.UpdateAsync(claimDto);
 

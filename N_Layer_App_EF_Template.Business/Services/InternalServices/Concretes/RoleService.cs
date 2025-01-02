@@ -14,43 +14,50 @@ public class RoleService : BaseService, IRoleService
     public RoleService(IUnitOfWork unitOfWork, IAutoMapper autoMapper) : base(unitOfWork, autoMapper)
     { }
 
-    public async Task<IServiceResult> AddClaimsToRoleAsync(long roleId, IEnumerable<ClaimDto> claimDtos)
+    public async Task<IServiceResult> AddClaimsToRoleAsync(long roleId, IEnumerable<long> claimIds)
     {
-        var role = await _unitOfWork.GetRepository<Role, long>()
-                                         .GetAsync(roleId, isTracking: true, includeProperties: "Claims");
+        if (claimIds == null || !claimIds.Any())
+            return BadRequest("Claim IDs cannot be null or empty.");
 
+        var role = await _unitOfWork.GetRepository<Role, long>()
+                                     .GetAsync(roleId, isTracking: true, includes: "Claims");
         if (role is null)
             return NotFound("Role not found.");
 
-        if (claimDtos is null || !claimDtos.Any())
-            return BadRequest("Claims cannot be empty.");
+        var claims = await _unitOfWork.GetRepository<Claim, long>().FindAsync(c => claimIds.Contains(c.Id));
 
-        var claims = _autoMapper.Map<Claim, ClaimDto>(claimDtos);
+        if (!claims.Any())
+            return BadRequest("No valid claims found.");
 
-        foreach (var claim in claims)
-            if (!role.Claims.Any(c => c.Name == claim.Name))
-                role.Claims.Add(claim);
+        var existingClaimIds = role.Claims.Select(c => c.Id).ToHashSet();
+        var newClaims = claims.Where(c => !existingClaimIds.Contains(c.Id)).ToList();
+
+        if (!newClaims.Any())
+            return BadRequest("All provided claims are already associated with the role.");
+
+        foreach (var claim in newClaims)
+            role.Claims.Add(claim);
 
         await _unitOfWork.CommitAsync();
-
         return Success();
     }
 
-    public async Task<IServiceResult> AddClaimToRoleAsync(long roleId, ClaimDto claimDto)
+    public async Task<IServiceResult> AddClaimToRoleAsync(long roleId, long claimId)
     {
-        var role = await _unitOfWork.GetRepository<Role, long>()
-            .GetAsync(roleId, isTracking: true, includeProperties: "Claims");
+        if (claimId <= 0)
+            return BadRequest("Invalid claim ID.");
 
+        var role = await _unitOfWork.GetRepository<Role, long>()
+                                     .GetAsync(roleId, isTracking: true, includes: "Claims");
         if (role is null)
             return NotFound("Role not found.");
 
-        if (claimDto is null)
-            return BadRequest("Claim cannot be null.");
+        var claim = await _unitOfWork.GetRepository<Claim, long>().GetAsync(claimId);
+        if (claim is null)
+            return NotFound("Claim not found.");
 
-        var claim = _autoMapper.Map<Claim, ClaimDto>(claimDto);
-
-        if (role.Claims.Any(c => c.Name == claim.Name))
-            return BadRequest($"Claim with name {claim.Name} already exists in the role.");
+        if (role.Claims.Any(c => c.Id == claim.Id))
+            return BadRequest($"Claim with ID {claim.Id} is already associated with the role.");
 
         role.Claims.Add(claim);
         await _unitOfWork.CommitAsync();
@@ -58,11 +65,11 @@ public class RoleService : BaseService, IRoleService
         return Success();
     }
 
-    public async Task<IServiceResult> CreateAsync(RoleDto roleDto)
+    public async Task<IServiceResult> CreateAsync(CreateRoleDto createRoleDto)
     {
-        var role = _autoMapper.Map<Role, RoleDto>(roleDto);
+        var role = _autoMapper.Map<Role, CreateRoleDto>(createRoleDto, true);
 
-        var existingRole = await _unitOfWork.GetRepository<Role, long>().GetAllAsync(r => r.Name == role.Name, false);
+        var existingRole = await _unitOfWork.GetRepository<Role, long>().FindAsync(r => r.Name == role.Name, false);
         if (existingRole.Any())
             return BadRequest($"Role with name {role.Name} already exists.");
 
@@ -89,21 +96,21 @@ public class RoleService : BaseService, IRoleService
     public async Task<IServiceResult> GetAllAsync()
     {
         var roles = await _unitOfWork.GetRepository<Role, long>()
-                                     .GetAllAsync(isTracking: false);
+                                     .GetAllAsync(isTracking: false, includes: "Claims");
 
-        var roleDtos = _autoMapper.Map<RoleDto, Role>(roles.ToList());
+        var roleDtos = _autoMapper.Map<RoleDto, Role>(roles.ToList(), true);
         return Success(roleDtos);
     }
 
     public async Task<IServiceResult> GetAllByUserId(long userId)
     {
         var user = await _unitOfWork.GetRepository<User, long>()
-                                     .GetAsync(userId, isTracking: false, includeProperties: "Roles");
+                                     .GetAsync(userId, isTracking: false, includes: "Roles");
 
         if (user is null)
             return NotFound("User not found.");
 
-        var roleDtos = _autoMapper.Map<RoleDto, Role>(user.Roles);
+        var roleDtos = _autoMapper.Map<RoleDto, Role>(user.Roles, true);
 
         return Success(roleDtos);
     }
@@ -111,12 +118,12 @@ public class RoleService : BaseService, IRoleService
     public async Task<IServiceResult> GetAsync(long roleId)
     {
         var role = await _unitOfWork.GetRepository<Role, long>()
-                                     .GetAsync(roleId, isTracking: false);
+                                     .GetAsync(roleId, isTracking: false, includes:"Claims");
 
         if (role is null)
             return NotFound("Role not found.");
 
-        var roleDto = _autoMapper.Map<RoleDto, Role>(role);
+        var roleDto = _autoMapper.Map<RoleDto, Role>(role, true);
 
         return Success(roleDto);
     }
@@ -124,12 +131,12 @@ public class RoleService : BaseService, IRoleService
     public async Task<IServiceResult> GetClaimsByRoleIdAsync(long roleId)
     {
         var role = await _unitOfWork.GetRepository<Role, long>()
-                                     .GetAsync(roleId, isTracking: false, includeProperties: "Claims");
+                                     .GetAsync(roleId, isTracking: false, includes: "Claims");
 
         if (role is null)
             return NotFound("Role not found.");
 
-        var claimDtos = _autoMapper.Map<ClaimDto, Claim>(role.Claims);
+        var claimDtos = _autoMapper.Map<UpdateClaimDto, Claim>(role.Claims);
         return Success(claimDtos);
     }
 
@@ -166,32 +173,22 @@ public class RoleService : BaseService, IRoleService
 
         await _unitOfWork.CommitAsync();
 
-        var roleDto = _autoMapper.Map<RoleDto, Role>(role);
+        var roleDto = _autoMapper.Map<RoleDto, Role>(role, true);
         return Success(roleDto);
     }
 
-    public async Task<IServiceResult> UpdateAsync(RoleDto roleDto)
+    public async Task<IServiceResult> UpdateAsync(UpdateRoleDto updateRoleDto)
     {
-        var existingRole = await _unitOfWork.GetRepository<Role, long>().GetAsync(roleDto.Id);
+        var existingRole = await _unitOfWork.GetRepository<Role, long>().GetAsync(updateRoleDto.Id);
         if (existingRole is null)
             return NotFound("Role not found.");
 
-        existingRole.Name = roleDto.Name;
-        existingRole.Description = roleDto.Description;
-
-        if (roleDto.Claims != null)
-        {
-            existingRole.Claims.Clear();
-            foreach (var claimDto in roleDto.Claims)
-            {
-                var claim = _autoMapper.Map<Claim, ClaimDto>(claimDto);
-                existingRole.Claims.Add(claim);
-            }
-        }
+        existingRole.Name = updateRoleDto.Name;
+        existingRole.Description = updateRoleDto.Description;
 
         await _unitOfWork.CommitAsync();
 
-        var updatedRoleDto = _autoMapper.Map<RoleDto, Role>(existingRole);
+        var updatedRoleDto = _autoMapper.Map<UpdateRoleDto, Role>(existingRole, true);
         return Success(updatedRoleDto);
     }
 }

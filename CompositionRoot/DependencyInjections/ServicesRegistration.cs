@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using N_Layer_App_EF_Template.Business.Mappings.Abstracts;
+using N_Layer_App_EF_Template.Business.Mappings.Profiles;
 using N_Layer_App_EF_Template.Business.Services.ExternalServices.OtpServices.Abstracts;
 using N_Layer_App_EF_Template.Business.Services.ExternalServices.OtpServices.Concretes;
 using N_Layer_App_EF_Template.Business.Services.InternalServices.Abstracts;
@@ -34,6 +35,7 @@ public static class ServicesRegistration
         #region AutoMapper
 
         services.AddScoped<IAutoMapper, Business.Mappings.Concretes.AutoMapper>();
+        services.AddScoped<MappingProfile>();
 
         #endregion
         return services;
