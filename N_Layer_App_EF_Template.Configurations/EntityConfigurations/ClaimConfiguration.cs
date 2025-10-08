@@ -8,8 +8,11 @@ public class ClaimConfiguration : IEntityTypeConfiguration<Claim>
 {
     public void Configure(EntityTypeBuilder<Claim> builder)
     {
-        builder.HasKey(rc => rc.Id);
         builder.Property(rc => rc.Name).IsRequired().HasMaxLength(50);
+        builder.Property(rc => rc.Description).HasMaxLength(500);
+        builder.Property(rc => rc.Description).HasMaxLength(500);
+        builder.Property(rc => rc.Description).HasMaxLength(500);
+        builder.Property(rc => rc.Description).HasMaxLength(500);
         builder.Property(rc => rc.Description).HasMaxLength(500);
     }
 }
